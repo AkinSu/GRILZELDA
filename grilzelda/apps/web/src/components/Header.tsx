@@ -39,9 +39,11 @@ export function Header({ bagCount, onOpenMenu, transparent = false }: HeaderProp
 
   return (
     <header
-      className={`${transparent ? 'fixed inset-x-0' : 'sticky'} top-0 z-30 w-full transition-[background-color,transform] duration-300 ease-out ${
-        solid ? 'bg-white' : 'bg-transparent'
-      } ${transparent && hidden ? '-translate-y-full' : 'translate-y-0'}`}>
+      className={`${transparent ? 'fixed inset-x-0' : 'sticky'} top-0 z-30 w-full ${solid ? 'bg-white' : 'bg-transparent'}`}
+      style={{
+        transition: 'background-color 300ms ease, transform 350ms cubic-bezier(0.23, 1, 0.32, 1)',
+        transform: transparent && hidden ? 'translateY(-100%)' : 'translateY(0)',
+      }}>
       <div className="flex h-16 items-center justify-between px-4 md:px-8">
         <button
           type="button"
