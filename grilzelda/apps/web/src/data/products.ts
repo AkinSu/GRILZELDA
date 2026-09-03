@@ -219,21 +219,17 @@ export const genderThumbnails: Record<Gender, string> = {
   men: G9
 };
 
-export const menuLinks = [
-  'Primavera Collection',
-  'Handbags',
-  'Women',
-  'Men',
-  'New In',
-  'Children',
-  'Travel',
-  'Jewelry & Watches',
-  'Décor & Lifestyle',
-  'Fragrances & Make-Up',
-  'Gifts'
+export const menuLinks: { label: string; sub: string[] }[] = [
+  { label: 'Shop Grillz', sub: ['Open Face', 'Closed Face', 'Fang Sets', 'Single Cap', 'Double Cap', 'Deep Cut'] },
+  { label: 'Book Appointment', sub: ['Custom Fitting', 'Consultation', 'Repair & Resize', 'Group Booking'] },
+  { label: 'Gold & Materials', sub: ['10 Karat Gold', '14 Karat Gold', '18 Karat Gold', 'Diamond Dust', 'Gemmed Settings', 'Two-Tone & Tri-Color'] },
+  { label: 'Collections', sub: ['Diamond Cut', 'Classic Solid', 'Iced Out', 'Custom Design'] },
+  { label: 'New Arrivals', sub: [] },
+  { label: 'Custom Order', sub: ['Start Your Design', 'Upload Reference', 'Pricing Guide'] },
+  { label: 'Care & Repairs', sub: ['Cleaning Guide', 'Repair Service', 'Warranty'] },
 ];
 
-export const menuSecondaryLinks = ['Grilzelda Services', 'World of Grilzelda', 'Store Locator'];
+export const menuSecondaryLinks = ['Our Story', 'Grilzelda Lookbook', 'Find Us', 'Contact'];
 
 export const filterLines = ['Ready-to-Wear', 'Handbags', 'Shoes', 'Accessories'];
 export const filterColors = ['Black', 'Brown', 'Beige', 'Blue', 'Green'];
