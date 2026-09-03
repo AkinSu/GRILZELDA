@@ -47,16 +47,23 @@ export function ProductCard({ product }: ProductCardProps) {
   const [hovered, setHovered] = useState(false);
   const [state, setState] = useState<ImgState>({ index: 0, dir: null, uid: 0 });
   const animating = useRef(false);
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hasAlternates = product.images.length > 1;
 
   const enter = () => {
-    setHovered(true);
-    if (hasAlternates) {
-      setState(s => ({ index: 1, dir: null, uid: s.uid + 1 }));
-    }
+    hoverTimer.current = setTimeout(() => {
+      setHovered(true);
+      if (hasAlternates) {
+        setState(s => ({ index: 1, dir: null, uid: s.uid + 1 }));
+      }
+    }, 150);
   };
 
   const leave = () => {
+    if (hoverTimer.current) {
+      clearTimeout(hoverTimer.current);
+      hoverTimer.current = null;
+    }
     setHovered(false);
     setState(s => ({ index: 0, dir: null, uid: s.uid + 1 }));
   };
