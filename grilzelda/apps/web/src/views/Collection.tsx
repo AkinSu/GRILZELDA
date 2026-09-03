@@ -93,7 +93,7 @@ export function Collection({ gender, onGenderChange }: CollectionProps) {
       {products.length > 0 ?
         <section
           aria-label="Products"
-          className="grid grid-cols-1 border-r border-t border-hairline sm:grid-cols-2 lg:grid-cols-4">
+          className="grid grid-cols-1 border-r border-t border-white sm:grid-cols-2 lg:grid-cols-4">
           {gridItems.map((item) =>
             item.kind === 'product' ?
               <ProductCard key={item.product.id} product={item.product} /> :

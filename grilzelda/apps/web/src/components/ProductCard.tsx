@@ -33,12 +33,12 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <article
-      className="group flex flex-col border-b border-l border-hairline"
+      className="group flex flex-col border-b border-l border-white"
       onMouseEnter={enter}
       onMouseLeave={leave}
       onFocus={enter}
       onBlur={leave}>
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-shade">
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-white">
         <AnimatePresence initial={false}>
           <motion.img
             key={product.images[index]}
@@ -47,7 +47,8 @@ export function ProductCard({ product }: ProductCardProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
+            transition={{ duration: 1.1, ease: [0.23, 1, 0.32, 1] }}
+            exit={{ opacity: 0, transition: { duration: 1.1 } }}
             className={`absolute inset-0 h-full w-full ${index === 0 ? 'object-contain p-8' : 'object-cover'}`} />
         </AnimatePresence>
 

@@ -1,16 +1,30 @@
 import type { Product, Gender, Editorial } from '../types/product';
 
-const MODEL = "/1b70cd61-2997-4b97-b020-4c3e63987e64.jpg";
-const CAPE = "/bc7b602c-fb91-4652-9005-ac47ad5538a7.jpg";
-const TURTLENECK = "/4ab374bc-db29-4563-96e6-987e4455759d.jpg";
-const DENIM = "/102428b6-178e-4b27-ae71-da9f464fea74.jpg";
-const BAG = "/92c956c5-0c32-43e1-b843-c8277ece5fb2.jpg";
-const BOOTS = "/5032ea96-677a-4f3e-9b28-ef103ecd55fb.jpg";
-const SCARF = "/5f716fca-299c-498d-aacd-af74e72b9c03.jpg";
-const COAT = "/96f6af08-e218-44be-a31e-ffd19892df9f.jpg";
-const SUNGLASSES = "/4de34b65-ea41-4dd7-bb89-0b5a51438c19.jpg";
-const LOAFER = "/bc4d68dc-9e92-495d-a4b2-2af62d13a4f8.jpg";
-const MODEL_MEN = "/13f9b3a4-b93f-4464-8edf-75671fdc08e0.jpg";
+// Inspo / lifestyle images (hover state)
+const I1 = "/inspo1.jpg";
+const I2 = "/inspo2.jpg";
+const I3 = "/inspo3.jpg";
+const I4 = "/inspo4.webp";
+const I5 = "/inspo5.webp";
+const I6 = "/inspo6.webp";
+const I7 = "/inspo7.webp";
+const I8 = "/inspo8.webp";
+const I9 = "/inspo9.webp";
+const I10 = "/inspo10.webp";
+
+// Grill product images (white background)
+const G1 = "/grill1.webp";
+const G2 = "/grill2.webp";
+const G3 = "/grill3.webp";
+const G4 = "/grill4.webp";
+const G5 = "/grill5.webp";
+const G6 = "/grill6.webp";
+const G7 = "/grill7.webp";
+const G8 = "/grill8.webp";
+const G9 = "/grill9.webp";
+const G10 = "/grill10.webp";
+const G11 = "/grill11.webp";
+const G12 = "/grill12.webp";
 
 export const womenProducts: Product[] = [
   {
@@ -20,7 +34,7 @@ export const womenProducts: Product[] = [
     tag: 'Runway',
     line: 'Ready-to-Wear',
     color: 'Brown',
-    images: [CAPE, MODEL]
+    images: [G1, I1]
   },
   {
     id: 'w2',
@@ -30,7 +44,7 @@ export const womenProducts: Product[] = [
     soldOutOnline: true,
     line: 'Ready-to-Wear',
     color: 'Black',
-    images: [TURTLENECK, MODEL]
+    images: [G2, I2]
   },
   {
     id: 'w3',
@@ -39,7 +53,7 @@ export const womenProducts: Product[] = [
     tag: 'Runway',
     line: 'Ready-to-Wear',
     color: 'Blue',
-    images: [DENIM, MODEL]
+    images: [G3, I3]
   },
   {
     id: 'w4',
@@ -48,7 +62,7 @@ export const womenProducts: Product[] = [
     tag: 'Runway',
     line: 'Handbags',
     color: 'Black',
-    images: [BAG, MODEL]
+    images: [G4, I4]
   },
   {
     id: 'w5',
@@ -56,7 +70,7 @@ export const womenProducts: Product[] = [
     price: 1690,
     line: 'Shoes',
     color: 'Black',
-    images: [BOOTS]
+    images: [G5, I5]
   },
   {
     id: 'w6',
@@ -64,7 +78,7 @@ export const womenProducts: Product[] = [
     price: 520,
     line: 'Accessories',
     color: 'Green',
-    images: [SCARF]
+    images: [G6, I6]
   },
   {
     id: 'w7',
@@ -73,7 +87,7 @@ export const womenProducts: Product[] = [
     tag: 'Runway',
     line: 'Ready-to-Wear',
     color: 'Beige',
-    images: [COAT, MODEL]
+    images: [G7, I7]
   },
   {
     id: 'w8',
@@ -81,7 +95,7 @@ export const womenProducts: Product[] = [
     price: 460,
     line: 'Accessories',
     color: 'Black',
-    images: [SUNGLASSES]
+    images: [G8, I8]
   }
 ];
 
@@ -93,7 +107,7 @@ export const menProducts: Product[] = [
     tag: 'Runway',
     line: 'Shoes',
     color: 'Black',
-    images: [LOAFER, MODEL_MEN]
+    images: [G9, I9]
   },
   {
     id: 'm2',
@@ -102,7 +116,7 @@ export const menProducts: Product[] = [
     tag: 'Runway',
     line: 'Ready-to-Wear',
     color: 'Black',
-    images: [TURTLENECK, MODEL_MEN]
+    images: [G10, I10]
   },
   {
     id: 'm3',
@@ -110,7 +124,7 @@ export const menProducts: Product[] = [
     price: 1050,
     line: 'Ready-to-Wear',
     color: 'Blue',
-    images: [DENIM, MODEL_MEN]
+    images: [G11, I1]
   },
   {
     id: 'm4',
@@ -120,7 +134,7 @@ export const menProducts: Product[] = [
     soldOutOnline: true,
     line: 'Ready-to-Wear',
     color: 'Beige',
-    images: [COAT, MODEL_MEN]
+    images: [G12, I2]
   },
   {
     id: 'm5',
@@ -128,7 +142,7 @@ export const menProducts: Product[] = [
     price: 320,
     line: 'Accessories',
     color: 'Green',
-    images: [SCARF]
+    images: [G1, I3]
   },
   {
     id: 'm6',
@@ -136,7 +150,7 @@ export const menProducts: Product[] = [
     price: 440,
     line: 'Accessories',
     color: 'Black',
-    images: [SUNGLASSES]
+    images: [G2, I4]
   },
   {
     id: 'm7',
@@ -144,7 +158,7 @@ export const menProducts: Product[] = [
     price: 4300,
     line: 'Handbags',
     color: 'Black',
-    images: [BAG]
+    images: [G3, I5]
   },
   {
     id: 'm8',
@@ -152,7 +166,7 @@ export const menProducts: Product[] = [
     price: 1590,
     line: 'Shoes',
     color: 'Black',
-    images: [BOOTS]
+    images: [G4, I6]
   }
 ];
 
@@ -160,13 +174,13 @@ export const editorialsByGender: Record<Gender, Editorial[]> = {
   women: [
     {
       id: 'e-women-1',
-      image: "/d907763c-20b3-49d7-b35f-2de04bdac9db.jpg",
+      image: "/inspo10.webp",
       label: "Shop Women's Ready-to-Wear",
       position: 4
     },
     {
       id: 'e-women-2',
-      image: "/3f6b1d83-54af-43f9-83ae-7124498f9302.jpg",
+      image: "/inspo9.webp",
       label: 'Shop All Handbags',
       position: 8
     }
@@ -174,13 +188,13 @@ export const editorialsByGender: Record<Gender, Editorial[]> = {
   men: [
     {
       id: 'e-men-1',
-      image: "/d907763c-20b3-49d7-b35f-2de04bdac9db.jpg",
+      image: "/inspo10.webp",
       label: "Shop Men's Ready-to-Wear",
       position: 4
     },
     {
       id: 'e-men-2',
-      image: "/3f6b1d83-54af-43f9-83ae-7124498f9302.jpg",
+      image: "/inspo9.webp",
       label: 'Shop All Leather Goods',
       position: 8
     }
@@ -193,8 +207,8 @@ export const productsByGender: Record<Gender, Product[]> = {
 };
 
 export const genderThumbnails: Record<Gender, string> = {
-  women: BAG,
-  men: LOAFER
+  women: G1,
+  men: G9
 };
 
 export const menuLinks = [

@@ -11,7 +11,7 @@ export function EditorialTile({ editorial }: EditorialTileProps) {
   return (
     <a
       href="#"
-      className="group relative block border-b border-l border-hairline sm:col-span-2"
+      className="group relative block border-b border-l border-white sm:col-span-2"
       aria-label={editorial.label}>
       <div className="aspect-[3/2] w-full" aria-hidden="true" />
       <div className="absolute inset-0 overflow-hidden bg-ink">
