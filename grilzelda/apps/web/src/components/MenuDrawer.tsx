@@ -31,6 +31,16 @@ export function MenuDrawer({ open, onClose }: MenuDrawerProps) {
     if (!open) setTimeout(() => setPanel(null), (CLOSE_DUR + 0.05) * 1000);
   }, [open]);
 
+  // Lock body scroll while open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
+
   // Escape key
   useEffect(() => {
     if (!open) return;
