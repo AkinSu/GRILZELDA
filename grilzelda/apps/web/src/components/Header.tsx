@@ -1,16 +1,47 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { PlusIcon, ShoppingBagIcon, UserIcon, SearchIcon, MenuIcon } from 'lucide-react';
 
 interface HeaderProps {
   bagCount: number;
   onOpenMenu: () => void;
+  transparent?: boolean;
 }
 
-export function Header({ bagCount, onOpenMenu }: HeaderProps) {
+export function Header({ bagCount, onOpenMenu, transparent = false }: HeaderProps) {
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastY = React.useRef(0);
+
+  useEffect(() => {
+    if (!transparent) return;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const dir = y > lastY.current ? 'down' : 'up';
+      lastY.current = y;
+
+      setScrolled(y > 20);
+
+      // Hide when scrolling down past the gallery (~100vh), show when scrolling up
+      if (dir === 'down' && y > window.innerHeight * 0.85) {
+        setHidden(true);
+      } else if (dir === 'up') {
+        setHidden(false);
+      }
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [transparent]);
+
+  const solid = !transparent || scrolled;
+
   return (
-    <header className="sticky top-0 z-30 w-full bg-white">
+    <header
+      className={`${transparent ? 'fixed inset-x-0' : 'sticky'} top-0 z-30 w-full transition-[background-color,transform] duration-300 ease-out ${
+        solid ? 'bg-white' : 'bg-transparent'
+      } ${transparent && hidden ? '-translate-y-full' : 'translate-y-0'}`}>
       <div className="flex h-16 items-center justify-between px-4 md:px-8">
         <button
           type="button"

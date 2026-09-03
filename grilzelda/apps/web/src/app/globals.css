@@ -32,3 +32,6 @@ body {
 .logotype {
   font-family: 'Cormorant', 'Times New Roman', serif;
 }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
