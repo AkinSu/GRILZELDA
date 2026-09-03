@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import Link from 'next/link';
 import type { Product } from '../types/product';
 import { formatPrice } from '../utils/format';
 
@@ -80,7 +81,7 @@ export function ProductCard({ product }: ProductCardProps) {
       onMouseLeave={leave}
       onFocus={enter}
       onBlur={leave}>
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-white">
+      <Link href={`/shop/${product.id}`} tabIndex={-1} aria-hidden="true" className="relative aspect-[3/4] w-full overflow-hidden bg-white block">
         <AnimatePresence initial={false}>
           <motion.img
             key={state.uid}
@@ -103,12 +104,12 @@ export function ProductCard({ product }: ProductCardProps) {
             <CarouselArrow
               side="left"
               visible={showControls}
-              onClick={() => step(-1)}
+              onClick={(e) => { e.preventDefault(); step(-1); }}
               label={`Previous image of ${product.name}`} />
             <CarouselArrow
               side="right"
               visible={showControls}
-              onClick={() => step(1)}
+              onClick={(e) => { e.preventDefault(); step(1); }}
               label={`Next image of ${product.name}`} />
             <div
               className={`absolute bottom-0 left-0 flex w-1/2 transition-opacity duration-200 ease-luxe ${
@@ -123,19 +124,19 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
           </>
         }
-      </div>
+      </Link>
 
       <div className="px-5 pb-8 pt-5">
         <p className="h-[14px] text-[10px] uppercase leading-[14px] tracking-[0.08em] text-muted">
           {product.soldOutOnline ? 'Sold out online' : ''}
         </p>
         <h3 className="mt-1.5 h-[18px] text-[13px] font-normal leading-[18px] text-ink">
-          <a
-            href="#"
+          <Link
+            href={`/shop/${product.id}`}
             title={product.name}
             className="block truncate whitespace-nowrap transition-opacity duration-150 ease-luxe hover:opacity-60">
             {product.name}
-          </a>
+          </Link>
         </h3>
         <p className="mt-2 h-[18px] text-[13px] leading-[18px] text-ink">{formatPrice(product.price)}</p>
       </div>
@@ -146,7 +147,7 @@ export function ProductCard({ product }: ProductCardProps) {
 interface CarouselArrowProps {
   side: 'left' | 'right';
   visible: boolean;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent) => void;
   label: string;
 }
 

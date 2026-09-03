@@ -64,7 +64,7 @@ export function Collection({ gender, onGenderChange }: CollectionProps) {
   return (
     <main>
       <div className="px-4 pb-6 pt-2 md:px-8">
-        <h1 className="text-[17px] uppercase tracking-[0.06em] text-ink">Grilzelda Primavera</h1>
+        <h1 className="text-[17px] uppercase tracking-[0.06em] text-ink">Grilzelda GALLARY</h1>
       </div>
 
       <div className="border-t border-hairline px-4 py-8 md:px-8">
