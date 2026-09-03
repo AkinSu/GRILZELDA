@@ -10,53 +10,65 @@ interface ProductCardProps {
   product: Product;
 }
 
-// null = crossfade, 1 = slide left (next), -1 = slide right (prev)
 type SlideDir = 1 | -1 | null;
 
+const SLIDE_DUR = 0.75;
+const FADE_DUR = 1.1;
+const EASE = [0.23, 1, 0.32, 1] as const;
+
+// Variants receive dir baked in at render time via custom.
+// We do NOT pass custom to AnimatePresence — so each exiting element
+// keeps the dir it was born with, not whatever dir is now.
 const variants = {
   enter: (dir: SlideDir) => ({
     x: dir === null ? 0 : dir > 0 ? '100%' : '-100%',
     opacity: dir === null ? 0 : 1,
   }),
-  center: {
+  center: (dir: SlideDir) => ({
     x: 0,
     opacity: 1,
-  },
+    transition: { duration: dir === null ? FADE_DUR : SLIDE_DUR, ease: EASE },
+  }),
   exit: (dir: SlideDir) => ({
     x: dir === null ? 0 : dir > 0 ? '-100%' : '100%',
     opacity: dir === null ? 0 : 1,
+    transition: { duration: dir === null ? FADE_DUR : SLIDE_DUR, ease: EASE },
   }),
 };
 
-const SLIDE_DURATION = 0.75; // seconds
+interface ImgState {
+  index: number;
+  dir: SlideDir;
+  uid: number; // unique per transition — locks dir to this instance's lifetime
+}
 
 export function ProductCard({ product }: ProductCardProps) {
   const [hovered, setHovered] = useState(false);
-  const [index, setIndex] = useState(0);
-  const [dir, setDir] = useState<SlideDir>(null);
+  const [state, setState] = useState<ImgState>({ index: 0, dir: null, uid: 0 });
   const animating = useRef(false);
   const hasAlternates = product.images.length > 1;
 
   const enter = () => {
     setHovered(true);
     if (hasAlternates) {
-      setDir(null);
-      setIndex(1);
+      setState(s => ({ index: 1, dir: null, uid: s.uid + 1 }));
     }
   };
 
   const leave = () => {
     setHovered(false);
-    setDir(null);
-    setIndex(0);
+    setState(s => ({ index: 0, dir: null, uid: s.uid + 1 }));
   };
 
   const step = (direction: 1 | -1) => {
     if (animating.current) return;
     animating.current = true;
-    setDir(direction);
-    setIndex((current) => (current + direction + product.images.length) % product.images.length);
-    setTimeout(() => { animating.current = false; }, SLIDE_DURATION * 1000);
+    setState(s => ({
+      index: (s.index + direction + product.images.length) % product.images.length,
+      dir: direction,
+      uid: s.uid + 1,
+    }));
+    setTimeout(() => { animating.current = false; }, SLIDE_DUR * 1000);
   };
 
   const showControls = hovered && hasAlternates;
@@ -69,22 +81,17 @@ export function ProductCard({ product }: ProductCardProps) {
       onFocus={enter}
       onBlur={leave}>
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-white">
-        <AnimatePresence initial={false} custom={dir}>
+        <AnimatePresence initial={false}>
           <motion.img
-            key={product.images[index]}
-            src={product.images[index]}
+            key={state.uid}
+            src={product.images[state.index]}
             alt={product.name}
-            custom={dir}
+            custom={state.dir}
             variants={variants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={
-              dir === null
-                ? { duration: 1.1, ease: [0.23, 1, 0.32, 1] }
-                : { duration: SLIDE_DURATION, ease: [0.23, 1, 0.32, 1] }
-            }
-            className={`absolute inset-0 h-full w-full ${index === 0 ? 'object-contain p-8' : 'object-cover'}`} />
+            className={`absolute inset-0 h-full w-full ${state.index === 0 ? 'object-contain p-8' : 'object-cover'}`} />
         </AnimatePresence>
 
         {product.tag &&
@@ -111,7 +118,7 @@ export function ProductCard({ product }: ProductCardProps) {
               {product.images.map((image, imageIndex) =>
                 <span
                   key={image}
-                  className={`h-[3px] flex-1 ${imageIndex === index ? 'bg-ink' : 'bg-hairline'}`} />
+                  className={`h-[3px] flex-1 ${imageIndex === state.index ? 'bg-ink' : 'bg-hairline'}`} />
               )}
             </div>
           </>
