@@ -29,18 +29,18 @@ const G12 = "/grill12.webp";
 export const womenProducts: Product[] = [
   {
     id: 'w1',
-    name: 'Shearling cape',
+    name: 'Diamond Cut Open Face',
     price: 6500,
-    tag: 'Runway',
+    tag: '10 Karat Solid',
     line: 'Ready-to-Wear',
     color: 'Brown',
     images: [G1, I1]
   },
   {
     id: 'w2',
-    name: 'Soft nappa turtleneck top',
+    name: 'Gemmed Closed Face',
     price: 3800,
-    tag: 'Runway',
+    tag: '14 Karat Yellow',
     soldOutOnline: true,
     line: 'Ready-to-Wear',
     color: 'Black',
@@ -48,51 +48,54 @@ export const womenProducts: Product[] = [
   },
   {
     id: 'w3',
-    name: 'Cotton denim pants with soft coating',
+    name: 'Deep Cut Double Cap',
     price: 1150,
-    tag: 'Runway',
+    tag: '18 Karat Solid',
     line: 'Ready-to-Wear',
     color: 'Blue',
     images: [G3, I3]
   },
   {
     id: 'w4',
-    name: 'Horsebit Duomo medium top handle bag',
+    name: 'Two-Tone Fang Set',
     price: 3950,
-    tag: 'Runway',
+    tag: '14 Karat Solid',
     line: 'Handbags',
     color: 'Black',
     images: [G4, I4]
   },
   {
     id: 'w5',
-    name: 'Horsebit ankle boot',
+    name: 'Diamond Dust Single Cap',
     price: 1690,
+    tag: '18 Karat Yellow',
     line: 'Shoes',
     color: 'Black',
     images: [G5, I5]
   },
   {
     id: 'w6',
-    name: 'Equestrian print silk scarf',
+    name: 'Tri-Color Open Face',
     price: 520,
+    tag: '10 Karat Yellow',
     line: 'Accessories',
     color: 'Green',
     images: [G6, I6]
   },
   {
     id: 'w7',
-    name: 'Double-breasted wool coat',
+    name: 'Gemmed Fang Set',
     price: 4900,
-    tag: 'Runway',
+    tag: '14 Karat Solid',
     line: 'Ready-to-Wear',
     color: 'Beige',
     images: [G7, I7]
   },
   {
     id: 'w8',
-    name: 'Oversize cat-eye sunglasses',
+    name: 'Diamond Cut Closed Face',
     price: 460,
+    tag: '18 Karat Solid',
     line: 'Accessories',
     color: 'Black',
     images: [G8, I8]
@@ -102,35 +105,36 @@ export const womenProducts: Product[] = [
 export const menProducts: Product[] = [
   {
     id: 'm1',
-    name: 'Horsebit leather loafer',
+    name: 'Deep Cut Single Cap',
     price: 1290,
-    tag: 'Runway',
+    tag: '10 Karat Yellow',
     line: 'Shoes',
     color: 'Black',
     images: [G9, I9]
   },
   {
     id: 'm2',
-    name: 'Nappa leather high-neck top',
+    name: 'Diamond Dust Closed Face',
     price: 3600,
-    tag: 'Runway',
+    tag: '14 Karat Solid',
     line: 'Ready-to-Wear',
     color: 'Black',
     images: [G10, I10]
   },
   {
     id: 'm3',
-    name: 'Straight-leg coated denim pants',
+    name: 'Two-Tone Double Cap',
     price: 1050,
+    tag: '18 Karat Yellow',
     line: 'Ready-to-Wear',
     color: 'Blue',
     images: [G11, I1]
   },
   {
     id: 'm4',
-    name: 'Belted wool overcoat',
+    name: 'Gemmed Open Face',
     price: 5200,
-    tag: 'Runway',
+    tag: '10 Karat Solid',
     soldOutOnline: true,
     line: 'Ready-to-Wear',
     color: 'Beige',
@@ -138,32 +142,36 @@ export const menProducts: Product[] = [
   },
   {
     id: 'm5',
-    name: 'Printed silk pocket square',
+    name: 'Tri-Color Fang Set',
     price: 320,
+    tag: '14 Karat Yellow',
     line: 'Accessories',
     color: 'Green',
     images: [G1, I3]
   },
   {
     id: 'm6',
-    name: 'Squared-frame acetate sunglasses',
+    name: 'Diamond Cut Double Cap',
     price: 440,
+    tag: '18 Karat Solid',
     line: 'Accessories',
     color: 'Black',
     images: [G2, I4]
   },
   {
     id: 'm7',
-    name: 'Horsebit Duomo leather briefcase',
+    name: 'Deep Cut Open Face',
     price: 4300,
+    tag: '10 Karat Solid',
     line: 'Handbags',
     color: 'Black',
     images: [G3, I5]
   },
   {
     id: 'm8',
-    name: 'Leather ankle boot with heel',
+    name: 'Diamond Dust Fang Set',
     price: 1590,
+    tag: '14 Karat Yellow',
     line: 'Shoes',
     color: 'Black',
     images: [G4, I6]

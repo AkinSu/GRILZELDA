@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import type { Product } from '../types/product';
@@ -10,23 +10,53 @@ interface ProductCardProps {
   product: Product;
 }
 
+// null = crossfade, 1 = slide left (next), -1 = slide right (prev)
+type SlideDir = 1 | -1 | null;
+
+const variants = {
+  enter: (dir: SlideDir) => ({
+    x: dir === null ? 0 : dir > 0 ? '100%' : '-100%',
+    opacity: dir === null ? 0 : 1,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (dir: SlideDir) => ({
+    x: dir === null ? 0 : dir > 0 ? '-100%' : '100%',
+    opacity: dir === null ? 0 : 1,
+  }),
+};
+
+const SLIDE_DURATION = 0.75; // seconds
+
 export function ProductCard({ product }: ProductCardProps) {
   const [hovered, setHovered] = useState(false);
   const [index, setIndex] = useState(0);
+  const [dir, setDir] = useState<SlideDir>(null);
+  const animating = useRef(false);
   const hasAlternates = product.images.length > 1;
 
   const enter = () => {
     setHovered(true);
-    if (hasAlternates) setIndex(1);
+    if (hasAlternates) {
+      setDir(null);
+      setIndex(1);
+    }
   };
 
   const leave = () => {
     setHovered(false);
+    setDir(null);
     setIndex(0);
   };
 
   const step = (direction: 1 | -1) => {
+    if (animating.current) return;
+    animating.current = true;
+    setDir(direction);
     setIndex((current) => (current + direction + product.images.length) % product.images.length);
+    setTimeout(() => { animating.current = false; }, SLIDE_DURATION * 1000);
   };
 
   const showControls = hovered && hasAlternates;
@@ -39,16 +69,21 @@ export function ProductCard({ product }: ProductCardProps) {
       onFocus={enter}
       onBlur={leave}>
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-white">
-        <AnimatePresence initial={false}>
+        <AnimatePresence initial={false} custom={dir}>
           <motion.img
             key={product.images[index]}
             src={product.images[index]}
             alt={product.name}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.1, ease: [0.23, 1, 0.32, 1] }}
-            exit={{ opacity: 0, transition: { duration: 1.1 } }}
+            custom={dir}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={
+              dir === null
+                ? { duration: 1.1, ease: [0.23, 1, 0.32, 1] }
+                : { duration: SLIDE_DURATION, ease: [0.23, 1, 0.32, 1] }
+            }
             className={`absolute inset-0 h-full w-full ${index === 0 ? 'object-contain p-8' : 'object-cover'}`} />
         </AnimatePresence>
 
