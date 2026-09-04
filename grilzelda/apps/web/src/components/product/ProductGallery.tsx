@@ -73,6 +73,15 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
     await startCamera();
   };
 
+  // Stop camera stream on unmount
+  useEffect(() => {
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(t => t.stop());
+      }
+    };
+  }, []);
+
   useEffect(() => {
     const el = viewerRef.current;
     if (!el) return;
