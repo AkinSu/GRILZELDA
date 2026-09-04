@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 
 export function RingViewer() {
   const mountRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const mount = mountRef.current;
@@ -89,6 +90,7 @@ export function RingViewer() {
       });
 
       scene.add(model);
+      setLoading(false);
     });
 
     // Drag to rotate
@@ -148,5 +150,27 @@ export function RingViewer() {
     };
   }, []);
 
-  return <div ref={mountRef} style={{ width: '100%', height: '100%' }} />;
+  return (
+    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+      <div ref={mountRef} style={{ width: '100%', height: '100%' }} />
+      {loading &&
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          background: '#eceae8',
+          gap: '16px',
+        }}>
+          <div style={{
+            width: '32px', height: '32px',
+            border: '2px solid #d4a843',
+            borderTopColor: 'transparent',
+            borderRadius: '50%',
+            animation: 'spin 0.8s linear infinite',
+          }} />
+          <p style={{ fontSize: '12px', letterSpacing: '0.14em', color: '#6b6b6b' }}>LOADING</p>
+          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        </div>
+      }
+    </div>
+  );;
 }
