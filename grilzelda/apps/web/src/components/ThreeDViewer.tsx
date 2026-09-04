@@ -121,11 +121,36 @@ export function RingViewer() {
       mount.style.cursor = 'grab';
     };
 
+    // Scroll to zoom
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      camera.position.z = Math.max(2, Math.min(10, camera.position.z + e.deltaY * 0.01));
+    };
+
+    // Pinch to zoom
+    let lastPinchDist = 0;
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length !== 2) return;
+      e.preventDefault();
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (lastPinchDist > 0) {
+        const delta = lastPinchDist - dist;
+        camera.position.z = Math.max(2, Math.min(10, camera.position.z + delta * 0.02));
+      }
+      lastPinchDist = dist;
+    };
+    const onTouchEnd = () => { lastPinchDist = 0; };
+
     mount.style.cursor = 'grab';
     mount.addEventListener('pointerdown', onPointerDown);
     mount.addEventListener('pointermove', onPointerMove);
     mount.addEventListener('pointerup', onPointerUp);
     mount.addEventListener('pointercancel', onPointerUp);
+    mount.addEventListener('wheel', onWheel, { passive: false });
+    mount.addEventListener('touchmove', onTouchMove, { passive: false });
+    mount.addEventListener('touchend', onTouchEnd);
 
     // Animate
     let frameId: number;
@@ -143,6 +168,9 @@ export function RingViewer() {
       mount.removeEventListener('pointermove', onPointerMove);
       mount.removeEventListener('pointerup', onPointerUp);
       mount.removeEventListener('pointercancel', onPointerUp);
+      mount.removeEventListener('wheel', onWheel);
+      mount.removeEventListener('touchmove', onTouchMove);
+      mount.removeEventListener('touchend', onTouchEnd);
       renderer.dispose();
       if (mount.contains(renderer.domElement)) {
         mount.removeChild(renderer.domElement);
