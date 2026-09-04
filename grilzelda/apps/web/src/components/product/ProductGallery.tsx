@@ -105,7 +105,7 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
 
         {/* Live 3D model — always spinning */}
         <div className="absolute inset-0">
-          <RingViewer />
+          <RingViewer active={!overlayVisible} />
         </div>
 
         {/* Dark overlay — fades out when user interacts */}
