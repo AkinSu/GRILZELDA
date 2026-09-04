@@ -72,6 +72,9 @@ export function RingViewer() {
       const scale = 3 / maxDim;
       model.scale.setScalar(scale);
       model.position.sub(center.multiplyScalar(scale));
+      model.rotation.z = Math.PI;
+      model.rotation.y = Math.PI;
+      model.rotation.x = -0.9;
 
       // Apply gold material
       model.traverse((child) => {

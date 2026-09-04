@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon, Rotate3dIcon, WebcamIcon } from 'lucide-react';
+import { RingViewer } from '../ThreeDViewer';
 
 interface ProductGalleryProps {
   images: string[];
@@ -11,6 +12,7 @@ interface ProductGalleryProps {
 export function ProductGallery({ images, name }: ProductGalleryProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  const [overlayVisible, setOverlayVisible] = useState(true);
 
   const syncActive = useCallback(() => {
     const el = trackRef.current;
@@ -96,19 +98,42 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
         </div>
       </div>
 
-      {/* Row 2 — reserved for the 3D viewer */}
+      {/* Row 2 — 3D viewer */}
       <div
-        className="relative flex min-h-[70vh] w-full items-center justify-center border-t border-white bg-[#eceae8]"
+        className="relative min-h-[70vh] w-full overflow-hidden border-t border-white bg-[#eceae8]"
         aria-label="3D product view">
-        <div className="flex flex-col items-center gap-4 text-center">
-          <Rotate3dIcon className="h-8 w-8 text-neutral-500" strokeWidth={1.25} />
-          <p className="text-[13px] font-medium tracking-[0.16em] text-neutral-600">3D VIEW</p>
+
+        {/* Live 3D model — always spinning */}
+        <div className="absolute inset-0">
+          <RingViewer />
         </div>
 
-        <div className="absolute inset-x-0 bottom-10 flex justify-center">
+        {/* Dark overlay — fades out when user interacts */}
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center"
+          style={{
+            background: 'rgba(0,0,0,0.45)',
+            transition: 'opacity 500ms ease',
+            opacity: overlayVisible ? 1 : 0,
+            pointerEvents: overlayVisible ? 'auto' : 'none',
+          }}
+          onPointerDown={() => setOverlayVisible(false)}>
+          <Rotate3dIcon className="h-9 w-9 text-white" strokeWidth={1.25} />
+          <p className="mt-3 text-[13px] font-medium tracking-[0.16em] text-white">3D VIEW</p>
+          <p className="mt-2 text-[12px] tracking-[0.08em] text-white/60">Click &amp; drag to explore</p>
+        </div>
+
+        {/* TRY ON — always visible, color flips with overlay */}
+        <div className="absolute inset-x-0 bottom-10 flex justify-center" style={{ pointerEvents: 'none' }}>
           <button
             type="button"
-            className="group flex items-center gap-3 border-b border-ink pb-2 text-ink transition-opacity duration-150 ease-out hover:opacity-70">
+            style={{
+              pointerEvents: 'auto',
+              transition: 'color 500ms ease, border-color 500ms ease',
+              color: overlayVisible ? '#ffffff' : '#1c1c1c',
+              borderColor: overlayVisible ? '#ffffff' : '#1c1c1c',
+            }}
+            className="flex items-center gap-3 border-b pb-2 transition-opacity duration-150 hover:opacity-70">
             <WebcamIcon className="h-5 w-5" strokeWidth={1.5} />
             <span className="text-[13px] font-medium tracking-[0.16em]">TRY ON</span>
           </button>
