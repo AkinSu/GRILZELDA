@@ -11,8 +11,20 @@ interface ProductGalleryProps {
 
 export function ProductGallery({ images, name }: ProductGalleryProps) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const viewerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [overlayVisible, setOverlayVisible] = useState(true);
+
+  useEffect(() => {
+    const el = viewerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (!entry.isIntersecting) setOverlayVisible(true); },
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const syncActive = useCallback(() => {
     const el = trackRef.current;
@@ -100,6 +112,7 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
 
       {/* Row 2 — 3D viewer */}
       <div
+        ref={viewerRef}
         className="relative min-h-[70vh] w-full overflow-hidden border-t border-white bg-[#eceae8]"
         aria-label="3D product view">
 
