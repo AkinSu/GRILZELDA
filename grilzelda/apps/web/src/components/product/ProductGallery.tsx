@@ -181,7 +181,7 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
       {/* Row 2 — 3D viewer / Camera */}
       <div
         ref={viewerRef}
-        className="relative min-h-[70vh] w-full overflow-hidden border-t border-white bg-[#eceae8]"
+        className="relative min-h-[70vh] w-full overflow-hidden border-t border-white bg-canvas"
         aria-label="3D product view">
 
         {cameraActive ? (

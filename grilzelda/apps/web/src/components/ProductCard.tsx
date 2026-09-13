@@ -6,6 +6,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import Link from 'next/link';
 import type { Product } from '../types/product';
 import { formatPrice } from '../utils/format';
+import { priceOf } from '../utils/pricing';
+import { metalLabel, toothCountLabel } from '../data/taxonomy';
 
 interface ProductCardProps {
   product: Product;
@@ -102,9 +104,9 @@ export function ProductCard({ product }: ProductCardProps) {
             className={`absolute inset-0 h-full w-full ${state.index === 0 ? 'object-contain p-8' : 'object-cover'}`} />
         </AnimatePresence>
 
-        {product.tag &&
-          <span className="absolute left-5 top-5 z-10 text-[12px] leading-none text-muted">{product.tag}</span>
-        }
+        <span className="absolute left-5 top-5 z-10 text-[12px] leading-none text-muted">
+          {metalLabel(product.config)}
+        </span>
 
         {hasAlternates &&
           <>
@@ -135,7 +137,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
       <div className="px-5 pb-8 pt-5">
         <p className="h-[14px] text-[10px] uppercase leading-[14px] tracking-[0.08em] text-muted">
-          {product.soldOutOnline ? 'Sold out online' : ''}
+          {toothCountLabel(product.config.teeth)}
         </p>
         <h3 className="mt-1.5 h-[18px] text-[13px] font-normal leading-[18px] text-ink">
           <Link
@@ -145,7 +147,10 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </Link>
         </h3>
-        <p className="mt-2 h-[18px] text-[13px] leading-[18px] text-ink">{formatPrice(product.price)}</p>
+        <p className="mt-2 h-[18px] text-[13px] leading-[18px] text-ink">
+          <span className="text-muted">from </span>
+          {formatPrice(priceOf(product.config))}
+        </p>
       </div>
     </article>
   );
