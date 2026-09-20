@@ -12,6 +12,10 @@ const I7 = '/inspo7.webp';
 const I8 = '/inspo8.webp';
 const I9 = '/inspo9.webp';
 const I10 = '/inspo10.webp';
+const I11 = '/inspo11.jpg';
+const I12 = '/inspo12.jpg';
+const I13 = '/inspo13.jpg';
+const I14 = '/inspo14.jpg';
 
 /* Studio shots on white (card default state) */
 const G1 = '/grill1.webp';
@@ -48,7 +52,7 @@ export const products: Product[] = [
       karat: 10,
       extras: [],
     },
-    images: [G1, I1],
+    images: [G1, I1, I11, I5],
     featured: true,
   },
   {
@@ -62,7 +66,7 @@ export const products: Product[] = [
       karat: 14,
       extras: [],
     },
-    images: [G2, I2],
+    images: [G2, I2, I12, I6],
   },
   {
     id: 'diamond-cut-open-face',
@@ -75,7 +79,7 @@ export const products: Product[] = [
       karat: 18,
       extras: [],
     },
-    images: [G3, I3],
+    images: [G3, I3, I13, I7],
     featured: true,
   },
   {
@@ -89,7 +93,7 @@ export const products: Product[] = [
       karat: 14,
       extras: [],
     },
-    images: [G4, I4],
+    images: [G4, I4, I14],
   },
   {
     id: 'bottom-six-closed-face',
@@ -115,7 +119,7 @@ export const products: Product[] = [
       karat: 14,
       extras: [],
     },
-    images: [G6, I6],
+    images: [G6, I6, I11, I2],
   },
   {
     id: 'yellow-gold-fang-set',
@@ -128,7 +132,7 @@ export const products: Product[] = [
       karat: 14,
       extras: ['extended-fangs'],
     },
-    images: [G7, I7],
+    images: [G7, I7, I12, I3],
     featured: true,
   },
   {
@@ -142,7 +146,7 @@ export const products: Product[] = [
       karat: 18,
       extras: ['extended-fangs'],
     },
-    images: [G8, I8],
+    images: [G8, I8, I13],
   },
   {
     id: 'single-gold-cap',
@@ -168,7 +172,7 @@ export const products: Product[] = [
       karat: 18,
       extras: [],
     },
-    images: [G10, I10],
+    images: [G10, I10, I14, I4],
   },
   {
     id: 'double-gold-cap',
@@ -194,7 +198,7 @@ export const products: Product[] = [
       karat: 14,
       extras: [],
     },
-    images: [G12, I2],
+    images: [G12, I2, I11],
   },
   {
     id: 'two-tone-diamond-cut',
@@ -207,7 +211,7 @@ export const products: Product[] = [
       karat: 14,
       extras: [],
     },
-    images: [G1, I3],
+    images: [G1, I3, I12, I8],
   },
   {
     id: 'tri-color-closed-face',
@@ -220,7 +224,7 @@ export const products: Product[] = [
       karat: 14,
       extras: [],
     },
-    images: [G2, I4],
+    images: [G2, I4, I13, I9],
   },
   {
     id: 'iced-out-closed-face',
@@ -233,7 +237,7 @@ export const products: Product[] = [
       karat: 14,
       extras: [],
     },
-    images: [G3, I5],
+    images: [G3, I5, I14, I10],
     featured: true,
   },
   {
@@ -260,7 +264,7 @@ export const products: Product[] = [
       karat: 14,
       extras: [],
     },
-    images: [G7, I8],
+    images: [G7, I8, I11],
   },
   {
     id: 'full-set-open-face',
@@ -273,7 +277,7 @@ export const products: Product[] = [
       karat: 14,
       extras: [],
     },
-    images: [G4, I6],
+    images: [G4, I6, I12, I1],
     featured: true,
   },
   {
@@ -287,7 +291,7 @@ export const products: Product[] = [
       karat: 18,
       extras: [],
     },
-    images: [G8, I9],
+    images: [G8, I9, I13, I5],
   },
 ];
 
