@@ -8,6 +8,9 @@
   --color-muted: #6b6b6b;
   --color-hairline: #e3e3e3;
   --color-shade: #f6f5f3;
+  /* Warm grey behind the gallery and 3D viewer. Must match the WebGL
+     clear colour in ThreeDViewer, or the canvas shows as a lighter box. */
+  --color-canvas: #eceae8;
   --ease-luxe: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -16,6 +19,7 @@
   --muted: #6b6b6b;
   --hairline: #e3e3e3;
   --shade: #f6f5f3;
+  --canvas: #eceae8;
 }
 
 html,

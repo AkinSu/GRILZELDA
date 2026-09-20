@@ -3,15 +3,24 @@
 import React, { useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { XIcon, CheckIcon } from 'lucide-react';
-import { filterColors, filterLines } from '../data/products';
+import {
+  FINISH_LABEL,
+  FINISH_OPTIONS,
+  KARAT_OPTIONS,
+  METAL_LABEL,
+  METAL_OPTIONS,
+  STYLE_LABEL,
+  STYLE_OPTIONS,
+} from '../data/taxonomy';
+import type { Finish, GrillStyle, Karat, Metal } from '../types/product';
 
-export type SortKey = 'recommended' | 'newest' | 'price-asc' | 'price-desc';
+/** "Newest" was dropped — presets carry no date, so it had nothing to sort by. */
+export type SortKey = 'recommended' | 'price-asc' | 'price-desc';
 
 const SORT_OPTIONS: { id: SortKey; label: string }[] = [
   { id: 'recommended', label: 'Recommended' },
-  { id: 'newest', label: 'Newest' },
   { id: 'price-asc', label: 'Price: low to high' },
-  { id: 'price-desc', label: 'Price: high to low' }
+  { id: 'price-desc', label: 'Price: high to low' },
 ];
 
 interface FilterSortDrawerProps {
@@ -19,10 +28,14 @@ interface FilterSortDrawerProps {
   onClose: () => void;
   sort: SortKey;
   onSortChange: (sort: SortKey) => void;
-  lines: string[];
-  colors: string[];
-  onToggleLine: (line: string) => void;
-  onToggleColor: (color: string) => void;
+  styles: GrillStyle[];
+  finishes: Finish[];
+  metals: Metal[];
+  karats: Karat[];
+  onToggleStyle: (value: GrillStyle) => void;
+  onToggleFinish: (value: Finish) => void;
+  onToggleMetal: (value: Metal) => void;
+  onToggleKarat: (value: Karat) => void;
   onClear: () => void;
   resultCount: number;
 }
@@ -32,12 +45,16 @@ export function FilterSortDrawer({
   onClose,
   sort,
   onSortChange,
-  lines,
-  colors,
-  onToggleLine,
-  onToggleColor,
+  styles,
+  finishes,
+  metals,
+  karats,
+  onToggleStyle,
+  onToggleFinish,
+  onToggleMetal,
+  onToggleKarat,
   onClear,
-  resultCount
+  resultCount,
 }: FilterSortDrawerProps) {
   useEffect(() => {
     if (!open) return;
@@ -98,16 +115,32 @@ export function FilterSortDrawer({
               </fieldset>
 
               <FilterGroup
-                title="Category"
-                options={filterLines}
-                selected={lines}
-                onToggle={onToggleLine} />
+                title="Style"
+                options={STYLE_OPTIONS}
+                label={(value) => STYLE_LABEL[value]}
+                selected={styles}
+                onToggle={onToggleStyle} />
 
               <FilterGroup
-                title="Color"
-                options={filterColors}
-                selected={colors}
-                onToggle={onToggleColor} />
+                title="Finish"
+                options={FINISH_OPTIONS}
+                label={(value) => FINISH_LABEL[value]}
+                selected={finishes}
+                onToggle={onToggleFinish} />
+
+              <FilterGroup
+                title="Metal"
+                options={METAL_OPTIONS}
+                label={(value) => METAL_LABEL[value]}
+                selected={metals}
+                onToggle={onToggleMetal} />
+
+              <FilterGroup
+                title="Karat"
+                options={KARAT_OPTIONS}
+                label={(value) => `${value} Karat`}
+                selected={karats}
+                onToggle={onToggleKarat} />
             </div>
 
             <div className="flex items-center gap-3 border-t border-hairline px-8 py-5">
@@ -131,14 +164,21 @@ export function FilterSortDrawer({
   );
 }
 
-interface FilterGroupProps {
+interface FilterGroupProps<T extends string | number> {
   title: string;
-  options: string[];
-  selected: string[];
-  onToggle: (value: string) => void;
+  options: readonly T[];
+  label: (value: T) => string;
+  selected: readonly T[];
+  onToggle: (value: T) => void;
 }
 
-function FilterGroup({ title, options, selected, onToggle }: FilterGroupProps) {
+function FilterGroup<T extends string | number>({
+  title,
+  options,
+  label,
+  selected,
+  onToggle,
+}: FilterGroupProps<T>) {
   return (
     <fieldset className="mt-10 border-t border-hairline pt-8">
       <legend className="mb-4 text-[12px] uppercase tracking-[0.1em] text-muted">{title}</legend>
@@ -158,7 +198,7 @@ function FilterGroup({ title, options, selected, onToggle }: FilterGroupProps) {
                 checked={checked}
                 onChange={() => onToggle(option)}
                 className="sr-only" />
-              {option}
+              {label(option)}
             </label>
           );
         })}

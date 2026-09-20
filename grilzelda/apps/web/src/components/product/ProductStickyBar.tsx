@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { Product } from '../../types/product';
 import { formatPrice } from '../../utils/format';
+import { priceOf } from '../../utils/pricing';
 
 interface ProductStickyBarProps {
   product: Product;
@@ -38,9 +39,12 @@ export function ProductStickyBar({ product }: ProductStickyBarProps) {
               alt=""
               className="h-16 w-16 shrink-0 bg-white object-contain p-2" />
             <span className="flex-1 truncate text-[15px] text-white">{product.name}</span>
-            <span className="text-[15px] text-white">{formatPrice(product.price)}</span>
-            <button type="button" className="text-[15px] text-white underline underline-offset-4">
-              Select Options
+            <span className="whitespace-nowrap text-[15px] text-white">
+              <span className="text-white/60">from </span>
+              {formatPrice(priceOf(product.config))}
+            </span>
+            <button type="button" className="whitespace-nowrap text-[15px] text-white underline underline-offset-4">
+              Configure
             </button>
           </div>
         </motion.div>

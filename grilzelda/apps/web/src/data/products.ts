@@ -1,235 +1,333 @@
-import type { Product, Gender, Editorial } from '../types/product';
+import type { Arch, Editorial, Product } from '../types/product';
+import { frontTeeth } from './taxonomy';
 
-// Inspo / lifestyle images (hover state)
-const I1 = "/inspo1.jpg";
-const I2 = "/inspo2.jpg";
-const I3 = "/inspo3.jpg";
-const I4 = "/inspo4.webp";
-const I5 = "/inspo5.webp";
-const I6 = "/inspo6.webp";
-const I7 = "/inspo7.webp";
-const I8 = "/inspo8.webp";
-const I9 = "/inspo9.webp";
-const I10 = "/inspo10.webp";
+/* Lifestyle / worn shots (card hover state) */
+const I1 = '/inspo1.jpg';
+const I2 = '/inspo2.jpg';
+const I3 = '/inspo3.jpg';
+const I4 = '/inspo4.webp';
+const I5 = '/inspo5.webp';
+const I6 = '/inspo6.webp';
+const I7 = '/inspo7.webp';
+const I8 = '/inspo8.webp';
+const I9 = '/inspo9.webp';
+const I10 = '/inspo10.webp';
+const I11 = '/inspo11.jpg';
+const I12 = '/inspo12.jpg';
+const I13 = '/inspo13.jpg';
+const I14 = '/inspo14.jpg';
 
-// Grill product images (white background)
-const G1 = "/grill1.webp";
-const G2 = "/grill2.webp";
-const G3 = "/grill3.webp";
-const G4 = "/grill4.webp";
-const G5 = "/grill5.webp";
-const G6 = "/grill6.webp";
-const G7 = "/grill7.webp";
-const G8 = "/grill8.webp";
-const G9 = "/grill9.webp";
-const G10 = "/grill10.webp";
-const G11 = "/grill11.webp";
-const G12 = "/grill12.webp";
+/* Studio shots on white (card default state) */
+const G1 = '/grill1.webp';
+const G2 = '/grill2.webp';
+const G3 = '/grill3.webp';
+const G4 = '/grill4.webp';
+const G5 = '/grill5.webp';
+const G6 = '/grill6.webp';
+const G7 = '/grill7.webp';
+const G8 = '/grill8.webp';
+const G9 = '/grill9.webp';
+const G10 = '/grill10.webp';
+const G11 = '/grill11.webp';
+const G12 = '/grill12.webp';
 
-export const womenProducts: Product[] = [
+const noTeeth = { top: [], bottom: [] };
+
+/**
+ * Gallery presets. Each is a starting configuration for the configurator,
+ * not a fixed SKU — prices are derived from `config` via `priceOf()`.
+ *
+ * NOTE: images are mapped sequentially as placeholders. Reassign them so each
+ * preset shows a photo that actually matches its style and finish.
+ */
+export const products: Product[] = [
   {
-    id: 'w1',
+    id: 'classic-open-face',
+    name: 'Classic Open Face',
+    config: {
+      teeth: { ...noTeeth, top: frontTeeth(6) },
+      style: 'open-face',
+      finish: 'solid',
+      metal: 'yellow-gold',
+      karat: 10,
+      extras: [],
+    },
+    images: [G1, I1, I11, I5],
+    featured: true,
+  },
+  {
+    id: 'eight-top-open-face',
+    name: 'Eight Top Open Face',
+    config: {
+      teeth: { ...noTeeth, top: frontTeeth(8) },
+      style: 'open-face',
+      finish: 'solid',
+      metal: 'yellow-gold',
+      karat: 14,
+      extras: [],
+    },
+    images: [G2, I2, I12, I6],
+  },
+  {
+    id: 'diamond-cut-open-face',
     name: 'Diamond Cut Open Face',
-    price: 6500,
-    tag: '10 Karat Solid',
-    line: 'Ready-to-Wear',
-    color: 'Brown',
-    images: [G1, I1]
+    config: {
+      teeth: { ...noTeeth, top: frontTeeth(10) },
+      style: 'open-face',
+      finish: 'diamond-cut',
+      metal: 'yellow-gold',
+      karat: 18,
+      extras: [],
+    },
+    images: [G3, I3, I13, I7],
+    featured: true,
   },
   {
-    id: 'w2',
-    name: 'Gemmed Closed Face',
-    price: 3800,
-    tag: '14 Karat Yellow',
-    soldOutOnline: true,
-    line: 'Ready-to-Wear',
-    color: 'Black',
-    images: [G2, I2]
+    id: 'classic-closed-face',
+    name: 'Classic Closed Face',
+    config: {
+      teeth: { ...noTeeth, top: frontTeeth(8) },
+      style: 'closed-face',
+      finish: 'solid',
+      metal: 'yellow-gold',
+      karat: 14,
+      extras: [],
+    },
+    images: [G4, I4, I14],
   },
   {
-    id: 'w3',
-    name: 'Deep Cut Double Cap',
-    price: 1150,
-    tag: '18 Karat Solid',
-    line: 'Ready-to-Wear',
-    color: 'Blue',
-    images: [G3, I3]
+    id: 'bottom-six-closed-face',
+    name: 'Bottom Six Closed Face',
+    config: {
+      teeth: { ...noTeeth, bottom: frontTeeth(6) },
+      style: 'closed-face',
+      finish: 'solid',
+      metal: 'yellow-gold',
+      karat: 10,
+      extras: [],
+    },
+    images: [G5, I5],
   },
   {
-    id: 'w4',
-    name: 'Two-Tone Fang Set',
-    price: 3950,
-    tag: '14 Karat Solid',
-    line: 'Handbags',
-    color: 'Black',
-    images: [G4, I4]
-  },
-  {
-    id: 'w5',
-    name: 'Diamond Dust Single Cap',
-    price: 1690,
-    tag: '18 Karat Yellow',
-    line: 'Shoes',
-    color: 'Black',
-    images: [G5, I5]
-  },
-  {
-    id: 'w6',
-    name: 'Tri-Color Open Face',
-    price: 520,
-    tag: '10 Karat Yellow',
-    line: 'Accessories',
-    color: 'Green',
-    images: [G6, I6]
-  },
-  {
-    id: 'w7',
-    name: 'Gemmed Fang Set',
-    price: 4900,
-    tag: '14 Karat Solid',
-    line: 'Ready-to-Wear',
-    color: 'Beige',
-    images: [G7, I7]
-  },
-  {
-    id: 'w8',
-    name: 'Diamond Cut Closed Face',
-    price: 460,
-    tag: '18 Karat Solid',
-    line: 'Accessories',
-    color: 'Black',
-    images: [G8, I8]
-  }
-];
-
-export const menProducts: Product[] = [
-  {
-    id: 'm1',
-    name: 'Deep Cut Single Cap',
-    price: 1290,
-    tag: '10 Karat Yellow',
-    line: 'Shoes',
-    color: 'Black',
-    images: [G9, I9]
-  },
-  {
-    id: 'm2',
+    id: 'diamond-dust-closed-face',
     name: 'Diamond Dust Closed Face',
-    price: 3600,
-    tag: '14 Karat Solid',
-    line: 'Ready-to-Wear',
-    color: 'Black',
-    images: [G10, I10]
+    config: {
+      teeth: { ...noTeeth, top: frontTeeth(8) },
+      style: 'closed-face',
+      finish: 'diamond-dust',
+      metal: 'yellow-gold',
+      karat: 14,
+      extras: [],
+    },
+    images: [G6, I6, I11, I2],
   },
   {
-    id: 'm3',
-    name: 'Two-Tone Double Cap',
-    price: 1050,
-    tag: '18 Karat Yellow',
-    line: 'Ready-to-Wear',
-    color: 'Blue',
-    images: [G11, I1]
+    id: 'yellow-gold-fang-set',
+    name: 'Yellow Gold Fang Set',
+    config: {
+      teeth: { ...noTeeth, top: frontTeeth(8) },
+      style: 'fang-set',
+      finish: 'solid',
+      metal: 'yellow-gold',
+      karat: 14,
+      extras: ['extended-fangs'],
+    },
+    images: [G7, I7, I12, I3],
+    featured: true,
   },
   {
-    id: 'm4',
-    name: 'Gemmed Open Face',
-    price: 5200,
-    tag: '10 Karat Solid',
-    soldOutOnline: true,
-    line: 'Ready-to-Wear',
-    color: 'Beige',
-    images: [G12, I2]
+    id: 'white-gold-diamond-cut-fangs',
+    name: 'White Gold Diamond Cut Fangs',
+    config: {
+      teeth: { ...noTeeth, top: frontTeeth(8) },
+      style: 'fang-set',
+      finish: 'diamond-cut',
+      metal: 'white-gold',
+      karat: 18,
+      extras: ['extended-fangs'],
+    },
+    images: [G8, I8, I13],
   },
   {
-    id: 'm5',
-    name: 'Tri-Color Fang Set',
-    price: 320,
-    tag: '14 Karat Yellow',
-    line: 'Accessories',
-    color: 'Green',
-    images: [G1, I3]
+    id: 'single-gold-cap',
+    name: 'Single Gold Cap',
+    config: {
+      teeth: { ...noTeeth, top: frontTeeth(1) },
+      style: 'single-cap',
+      finish: 'solid',
+      metal: 'yellow-gold',
+      karat: 10,
+      extras: [],
+    },
+    images: [G9, I9],
   },
   {
-    id: 'm6',
-    name: 'Diamond Cut Double Cap',
-    price: 440,
-    tag: '18 Karat Solid',
-    line: 'Accessories',
-    color: 'Black',
-    images: [G2, I4]
+    id: 'iced-single-cap',
+    name: 'Iced Single Cap',
+    config: {
+      teeth: { ...noTeeth, top: frontTeeth(1) },
+      style: 'single-cap',
+      finish: 'iced-out',
+      metal: 'yellow-gold',
+      karat: 18,
+      extras: [],
+    },
+    images: [G10, I10, I14, I4],
   },
   {
-    id: 'm7',
-    name: 'Deep Cut Open Face',
-    price: 4300,
-    tag: '10 Karat Solid',
-    line: 'Handbags',
-    color: 'Black',
-    images: [G3, I5]
+    id: 'double-gold-cap',
+    name: 'Double Gold Cap',
+    config: {
+      teeth: { ...noTeeth, top: frontTeeth(2) },
+      style: 'double-cap',
+      finish: 'solid',
+      metal: 'yellow-gold',
+      karat: 14,
+      extras: [],
+    },
+    images: [G11, I1],
   },
   {
-    id: 'm8',
-    name: 'Diamond Dust Fang Set',
-    price: 1590,
-    tag: '14 Karat Yellow',
-    line: 'Shoes',
-    color: 'Black',
-    images: [G4, I6]
-  }
+    id: 'deep-cut-double-cap',
+    name: 'Deep Cut Double Cap',
+    config: {
+      teeth: { ...noTeeth, top: frontTeeth(2) },
+      style: 'double-cap',
+      finish: 'deep-cut',
+      metal: 'yellow-gold',
+      karat: 14,
+      extras: [],
+    },
+    images: [G12, I2, I11],
+  },
+  {
+    id: 'two-tone-diamond-cut',
+    name: 'Two-Tone Diamond Cut',
+    config: {
+      teeth: { ...noTeeth, top: frontTeeth(8) },
+      style: 'closed-face',
+      finish: 'diamond-cut',
+      metal: 'two-tone',
+      karat: 14,
+      extras: [],
+    },
+    images: [G1, I3, I12, I8],
+  },
+  {
+    id: 'tri-color-closed-face',
+    name: 'Tri-Color Closed Face',
+    config: {
+      teeth: { ...noTeeth, top: frontTeeth(10) },
+      style: 'closed-face',
+      finish: 'solid',
+      metal: 'tri-color',
+      karat: 14,
+      extras: [],
+    },
+    images: [G2, I4, I13, I9],
+  },
+  {
+    id: 'iced-out-closed-face',
+    name: 'Iced Out Closed Face',
+    config: {
+      teeth: { ...noTeeth, top: frontTeeth(8) },
+      style: 'closed-face',
+      finish: 'iced-out',
+      metal: 'yellow-gold',
+      karat: 14,
+      extras: [],
+    },
+    images: [G3, I5, I14, I10],
+    featured: true,
+  },
+  {
+    id: 'bottom-eight-closed-face',
+    name: 'Bottom Eight Closed Face',
+    config: {
+      teeth: { ...noTeeth, bottom: frontTeeth(8) },
+      style: 'closed-face',
+      finish: 'solid',
+      metal: 'yellow-gold',
+      karat: 14,
+      extras: [],
+    },
+    images: [G6, I7],
+  },
+  {
+    id: 'diamond-cut-bottom-six',
+    name: 'Diamond Cut Bottom Six',
+    config: {
+      teeth: { ...noTeeth, bottom: frontTeeth(6) },
+      style: 'open-face',
+      finish: 'diamond-cut',
+      metal: 'yellow-gold',
+      karat: 14,
+      extras: [],
+    },
+    images: [G7, I8, I11],
+  },
+  {
+    id: 'full-set-open-face',
+    name: 'Full Set Open Face',
+    config: {
+      teeth: { top: frontTeeth(8), bottom: frontTeeth(8) },
+      style: 'open-face',
+      finish: 'solid',
+      metal: 'yellow-gold',
+      karat: 14,
+      extras: [],
+    },
+    images: [G4, I6, I12, I1],
+    featured: true,
+  },
+  {
+    id: 'full-set-diamond-cut',
+    name: 'Full Set Diamond Cut',
+    config: {
+      teeth: { top: frontTeeth(8), bottom: frontTeeth(6) },
+      style: 'closed-face',
+      finish: 'diamond-cut',
+      metal: 'yellow-gold',
+      karat: 18,
+      extras: [],
+    },
+    images: [G8, I9, I13, I5],
+  },
 ];
 
-export const editorialsByGender: Record<Gender, Editorial[]> = {
-  women: [
-    {
-      id: 'e-women-1',
-      image: "/inspo10.webp",
-      label: "Shop Women's Ready-to-Wear",
-      position: 4
-    },
-    {
-      id: 'e-women-2',
-      image: "/inspo9.webp",
-      label: 'Shop All Handbags',
-      position: 8
-    }
-  ],
-  men: [
-    {
-      id: 'e-men-1',
-      image: "/inspo10.webp",
-      label: "Shop Men's Ready-to-Wear",
-      position: 4
-    },
-    {
-      id: 'e-men-2',
-      image: "/inspo9.webp",
-      label: 'Shop All Leather Goods',
-      position: 8
-    }
-  ]
-};
+/** Tiles woven into the grid — these point at the process, not more product. */
+export const editorials: Editorial[] = [
+  {
+    id: 'e-process',
+    image: '/inspo10.webp',
+    label: 'How a Grilzelda Set Is Made',
+    href: '/how-it-works',
+    position: 4,
+  },
+  {
+    id: 'e-custom',
+    image: '/inspo9.webp',
+    label: 'Design Your Own',
+    href: '/design',
+    position: 10,
+  },
+];
 
-export const productsByGender: Record<Gender, Product[]> = {
-  women: womenProducts,
-  men: menProducts
-};
-
-export const genderThumbnails: Record<Gender, string> = {
-  women: G1,
-  men: G9
+/** Thumbnails for the arch toggle. */
+export const archThumbnails: Record<Arch, string> = {
+  top: G1,
+  bottom: G5,
+  both: G4,
 };
 
 export const menuLinks: { label: string; sub: string[] }[] = [
-  { label: 'Shop Grillz', sub: ['Open Face', 'Closed Face', 'Fang Sets', 'Single Cap', 'Double Cap', 'Deep Cut'] },
-  { label: 'Book Appointment', sub: ['Custom Fitting', 'Consultation', 'Repair & Resize', 'Group Booking'] },
-  { label: 'Gold & Materials', sub: ['10 Karat Gold', '14 Karat Gold', '18 Karat Gold', 'Diamond Dust', 'Gemmed Settings', 'Two-Tone & Tri-Color'] },
-  { label: 'Collections', sub: ['Diamond Cut', 'Classic Solid', 'Iced Out', 'Custom Design'] },
+  { label: 'Shop Grillz', sub: ['Open Face', 'Closed Face', 'Fang Sets', 'Single Cap', 'Double Cap'] },
+  { label: 'Book Appointment', sub: ['Custom Fitting', 'Video Consultation', 'Repair & Resize', 'Group Booking'] },
+  { label: 'Gold & Materials', sub: ['10 Karat Gold', '14 Karat Gold', '18 Karat Gold', 'White & Rose Gold', 'Two-Tone & Tri-Color'] },
+  { label: 'Finishes', sub: ['Solid', 'Diamond Cut', 'Deep Cut', 'Diamond Dust', 'Iced Out'] },
   { label: 'New Arrivals', sub: [] },
-  { label: 'Custom Order', sub: ['Start Your Design', 'Upload Reference', 'Pricing Guide'] },
+  { label: 'Custom Order', sub: ['Design Your Own', 'Order a Mold Kit', 'Pricing Guide'] },
   { label: 'Care & Repairs', sub: ['Cleaning Guide', 'Repair Service', 'Warranty'] },
 ];
 
 export const menuSecondaryLinks = ['Our Story', 'Grilzelda Lookbook', 'Find Us', 'Contact'];
-
-export const filterLines = ['Ready-to-Wear', 'Handbags', 'Shoes', 'Accessories'];
-export const filterColors = ['Black', 'Brown', 'Beige', 'Blue', 'Green'];

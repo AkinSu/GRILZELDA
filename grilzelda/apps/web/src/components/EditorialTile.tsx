@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import type { Editorial } from '../types/product';
 
 interface EditorialTileProps {
@@ -9,8 +10,8 @@ interface EditorialTileProps {
 
 export function EditorialTile({ editorial }: EditorialTileProps) {
   return (
-    <a
-      href="#"
+    <Link
+      href={editorial.href}
       className="group relative block border-b border-l border-white sm:col-span-2"
       aria-label={editorial.label}>
       <div className="aspect-[3/2] w-full" aria-hidden="true" />
@@ -23,6 +24,6 @@ export function EditorialTile({ editorial }: EditorialTileProps) {
       <span className="absolute bottom-8 left-8 z-10 text-[15px] text-white underline underline-offset-[6px] decoration-white/90">
         {editorial.label}
       </span>
-    </a>
+    </Link>
   );
 }
