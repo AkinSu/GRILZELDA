@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
-import { womenProducts, menProducts } from '../../../data/products';
+import { products } from '../../../data/products';
 import { Header } from '../../../components/Header';
 import { MenuDrawer } from '../../../components/MenuDrawer';
 import { ProductGallery } from '../../../components/product/ProductGallery';
@@ -12,8 +12,6 @@ import { ProductStickyBar } from '../../../components/product/ProductStickyBar';
 import { ProductFooter } from '../../../components/product/ProductFooter';
 import { RevealFooter } from '../../../components/product/RevealFooter';
 
-const allProducts = [...womenProducts, ...menProducts];
-
 const INSPO_IMGS = [
   '/inspo1.jpg', '/inspo2.jpg', '/inspo3.jpg', '/inspo4.webp',
   '/inspo5.webp', '/inspo6.webp', '/inspo7.webp', '/inspo8.webp',
@@ -21,7 +19,7 @@ const INSPO_IMGS = [
 
 export default function ProductPage() {
   const { slug } = useParams<{ slug: string }>();
-  const product = allProducts.find(p => p.id === slug);
+  const product = products.find(p => p.id === slug);
   const [menuOpen, setMenuOpen] = useState(false);
 
   if (!product) {
