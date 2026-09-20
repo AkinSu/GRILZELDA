@@ -1,9 +1,13 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { ChevronLeftIcon, ChevronRightIcon, Rotate3dIcon, WebcamIcon } from 'lucide-react';
 import { RingViewer } from '../ThreeDViewer';
 import { CameraPermissionSheet } from './CameraPermissionSheet';
+
+// Camera + three.js + MediaPipe — only fetched once someone taps TRY ON.
+const TryOnView = dynamic(() => import('../tryon/TryOnView'), { ssr: false });
 
 interface ProductGalleryProps {
   images: string[];
@@ -18,35 +22,16 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
   const [permissionSheet, setPermissionSheet] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
   const [viewerKey, setViewerKey] = useState(0);
-  const streamRef = useRef<MediaStream | null>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
-  const startCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
-      streamRef.current = stream;
-      setCameraActive(true);
-      // Attach stream to video element after it mounts
-      setTimeout(() => {
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.play();
-        }
-      }, 50);
-    } catch {
-      // User denied browser prompt
-    }
-  };
+  // TryOnView owns the camera stream: it requests it on mount, reports a denied
+  // prompt itself, and stops the tracks when it unmounts.
+  const startCamera = () => setCameraActive(true);
 
-  const stopCamera = () => {
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach(t => t.stop());
-      streamRef.current = null;
-    }
+  const stopCamera = useCallback(() => {
     setCameraActive(false);
     setOverlayVisible(true);
     setViewerKey(k => k + 1); // remount RingViewer to reset rotation
-  };
+  }, []);
 
   const handleTryOn = async () => {
     const CONSENT_KEY = 'grilzelda_camera_consent';
@@ -56,7 +41,7 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
       try {
         const result = await navigator.permissions.query({ name: 'camera' as PermissionName });
         if (result.state === 'granted') {
-          await startCamera();
+          startCamera();
           return;
         }
       } catch {
@@ -67,20 +52,11 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
     setPermissionSheet(true);
   };
 
-  const handleAccept = async () => {
+  const handleAccept = () => {
     localStorage.setItem('grilzelda_camera_consent', 'true');
     setPermissionSheet(false);
-    await startCamera();
+    startCamera();
   };
-
-  // Stop camera stream on unmount
-  useEffect(() => {
-    return () => {
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach(t => t.stop());
-      }
-    };
-  }, []);
 
   useEffect(() => {
     const el = viewerRef.current;
@@ -185,28 +161,7 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
         aria-label="3D product view">
 
         {cameraActive ? (
-          <>
-            {/* Live camera feed */}
-            <video
-              ref={videoRef}
-              autoPlay
-              playsInline
-              muted
-              className="absolute inset-0 h-full w-full object-cover"
-              style={{ transform: 'scaleX(-1)' }} />
-
-            {/* Close button — scaleX(-1) to undo the video mirror */}
-            <button
-              type="button"
-              onClick={stopCamera}
-              aria-label="Close camera"
-              style={{ transform: 'scaleX(-1)' }}
-              className="absolute right-5 top-5 z-10 flex h-10 w-10 items-center justify-center bg-black/40 text-white backdrop-blur-sm transition-opacity hover:opacity-70">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
-          </>
+          <TryOnView productName={name} onClose={stopCamera} />
         ) : (
           <>
             {/* Live 3D model — always spinning */}
